@@ -1,0 +1,3 @@
+#Property/parameter that is used by the system to calculate the social rating score:
+social-rating-calculator:
+  base-seed: 1

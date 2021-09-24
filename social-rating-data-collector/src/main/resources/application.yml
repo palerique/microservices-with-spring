@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: social-rating-data-collector
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: "${spring.application.name}-${spring.cloud.client.hostname}-${random.int[1,999999]}"
+        register: true
+        deregister: true
+        health-check-interval: 10s
+        health-check-timeout: 10s
+        health-check-critical-timeout: 10s
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  config:
+    import: classpath:additional-application-properties.yml
+logging:
+  level:
+    br:
+      com:
+        palerique: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      all: true
+    tags:
+      application: "${spring.cloud.consul.discovery.instance-id}"
+    export:
+      prometheus:
+        enabled: true
+        pushgateway:
+          enabled: true
+          base-url: pushgateway:9091
+          shutdown-operation: push
+          push-rate: 5s

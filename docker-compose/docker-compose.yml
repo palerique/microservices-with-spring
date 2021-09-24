@@ -1,0 +1,164 @@
+version: '3.9'
+
+services:
+
+  social-rating-data-collector:
+    extends:
+      file: ../social-rating-data-collector/src/main/docker/app.yml
+      service: social-rating-data-collector
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul-server
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS: kafka:9092
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
+    depends_on:
+      [ consul-server, kafka, pushgateway ]
+    networks:
+      - social-rating-network
+    scale: 5
+    restart: always
+    ports:
+      - "8080"
+
+  social-rating-calculator:
+    extends:
+      file: ../social-rating-calculator/src/main/docker/app.yml
+      service: social-rating-calculator
+    environment:
+      SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONSUL_HOST: consul-server
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SPRING_REDIS_DATABASE: 0
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_REDIS_PASSWORD: Redis2019!
+      SPRING_REDIS_TIMEOUT: 60000
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
+    depends_on:
+      [ kafka, redis, consul-server, pushgateway ]
+    networks:
+      - social-rating-network
+    scale: 2
+    restart: always
+    ports:
+      - "8080"
+
+  social-rating-application-gateway:
+    extends:
+      file: ../application-gateway/src/main/docker/app.yml
+      service: social-rating-application-gateway
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul-server
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
+    depends_on:
+      [ consul-server, social-rating-calculator, social-rating-data-collector, pushgateway ]
+    networks:
+      - social-rating-network
+    restart: always
+    ports:
+      - "80:80"
+
+  consul-server:
+    image: hashicorp/consul:1.9.3
+    container_name: consul-server
+    restart: always
+    volumes:
+      - ./consul/server.json:/consul/config/server.json:ro
+    networks:
+      - social-rating-network
+    ports:
+      - "8500:8500"
+      - "8600:8600/tcp"
+      - "8600:8600/udp"
+    command: "agent"
+
+  # Kafka needs this zookeeper:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+    restart: always
+    networks:
+      - social-rating-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:29092
+    restart: always
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - social-rating-network
+
+  redis:
+    image: redis
+    command: redis-server --requirepass Redis2019!
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - social-rating-network
+
+  pushgateway:
+    image: prom/pushgateway:latest
+    volumes:
+      - pushgateway_data:/data
+    command:
+      - --persistence.file=/data/pushgateway.data
+      - --persistence.interval=1h
+    ports:
+      - "9091:9091"
+    networks:
+      - social-rating-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+    networks:
+      - social-rating-network
+    depends_on:
+      [ social-rating-calculator, social-rating-data-collector, social-rating-application-gateway ]
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+    networks:
+      - social-rating-network
+    depends_on:
+      [ prometheus ]
+
+volumes:
+  prom_data:
+  pushgateway_data:
+
+networks:
+  social-rating-network:
+    driver: bridge

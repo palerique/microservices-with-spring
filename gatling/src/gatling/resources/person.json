@@ -1,0 +1,5 @@
+{
+  "age": "${dob.age}",
+  "first_name": "${name.first}",
+  "last_name": "${name.last}"
+}

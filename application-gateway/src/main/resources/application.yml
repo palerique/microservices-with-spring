@@ -1,0 +1,80 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: social-rating-application-gateway
+  cloud:
+    consul:
+      enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: "${spring.application.name}-${spring.cloud.client.hostname}-${random.int[1,999999]}"
+        # Get only services that are passing the health check
+        query-passing: true
+        register: true
+        deregister: true
+        health-check-interval: 10s
+        health-check-timeout: 10s
+        health-check-critical-timeout: 10s
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders:
+              - "*"
+            allowedMethods:
+              - "GET"
+              - "POST"
+              - "OPTIONS"
+        default-filters:
+          - name: Retry
+            args:
+              retries: 3
+              methods: GET,POST
+      routes:
+        - id: social-rating-data-collector
+          uri: lb://social-rating-data-collector
+          predicates:
+            - Path=/collector/**
+          filters:
+            - StripPrefix=1
+        - id: social-rating-calculator
+          uri: lb://social-rating-calculator
+          predicates:
+            - Path=/calculator/**
+          filters:
+            - StripPrefix=1
+logging:
+  level:
+    br:
+      com:
+        palerique: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      all: true
+    tags:
+      application: "${spring.cloud.consul.discovery.instance-id}"
+    export:
+      prometheus:
+        enabled: true
+        pushgateway:
+          enabled: true
+          base-url: pushgateway:9091
+          shutdown-operation: push
+          push-rate: 5s
