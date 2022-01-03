@@ -37,7 +37,7 @@ class MessageConsumerTest {
   @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
   void consume() throws JsonProcessingException {
 
-    PersonDto dto = PersonDto.builder()
+    final var dto = PersonDto.builder()
         .firstName("Paulo")
         .lastName("Rodrigues")
         .age(37)
@@ -46,9 +46,9 @@ class MessageConsumerTest {
     when(objectMapper.readValue(JSON, PersonDto.class)).thenReturn(dto);
     when(socialRatingScoreService.getSocialRatingScore(dto)).thenReturn(SCORE);
 
-    AtomicReference<Person> person = new AtomicReference<>();
+    final var person = new AtomicReference<Person>();
     when(peopleRepository.save(any(Person.class))).thenAnswer(invocation -> {
-      Person argument = invocation.getArgument(0);
+      final Person argument = invocation.getArgument(0);
       person.set(argument);
       return argument;
     });

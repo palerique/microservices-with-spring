@@ -19,7 +19,7 @@ class SocialRatingScoreServiceTest {
   @CsvFileSource(resources = "/age-seed.csv", numLinesToSkip = 1)
   void shouldCorrectlyCalculateTheSocialRatingScore(Integer age, Integer seed) {
 
-    int socialRatingScore = service.getSocialRatingScore(PersonDto.builder()
+    final var socialRatingScore = service.getSocialRatingScore(PersonDto.builder()
         .age(age)
         .seed(seed)
         .build());

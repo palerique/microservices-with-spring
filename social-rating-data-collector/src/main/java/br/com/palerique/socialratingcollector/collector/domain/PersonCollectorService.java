@@ -3,9 +3,9 @@ package br.com.palerique.socialratingcollector.collector.domain;
 import br.com.palerique.socialratingcollector.collector.infra.AppProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Log4j2
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class PersonCollectorService {
 
   private final MessageProducer messageProducer;
@@ -29,7 +30,7 @@ public class PersonCollectorService {
    * @throws JsonProcessingException if not possible to convert to JSON.
    */
   public PersonDto schedule(PersonDto person) throws JsonProcessingException {
-    PersonDto result = person.toBuilder().seed(appProperties.getBaseSeed()).build();
+    final var result = person.toBuilder().seed(appProperties.getBaseSeed()).build();
     log.debug("Scheduling person {}", result);
     messageProducer.sendMessage(objectMapper.writeValueAsString(result));
     return result;

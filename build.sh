@@ -14,4 +14,5 @@ set -e
 #./gradlew clean check bootJar
 #popd || exit
 
+#./gradlew clean check bootJar --debug
 ./gradlew clean check bootJar

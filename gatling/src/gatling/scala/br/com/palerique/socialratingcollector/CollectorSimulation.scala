@@ -16,7 +16,7 @@ class CollectorSimulation extends Simulation {
     .acceptHeader("*/*")
     .contentTypeHeader("application/json")
 
-  val jsonUrlFeeder: FeederBuilderBase[Any]#F = jsonFile("people.json").random
+  val jsonUrlFeeder: FeederBuilderBase[Any] = jsonFile("people.json").random
 
   val allOperationsScn: ScenarioBuilder = scenario("CollectorSimulation")
     .feed(jsonUrlFeeder)

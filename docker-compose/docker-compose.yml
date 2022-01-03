@@ -15,7 +15,7 @@ services:
       [ consul-server, kafka, pushgateway ]
     networks:
       - social-rating-network
-    scale: 5
+    scale: 1
     restart: always
     ports:
       - "8080"
@@ -38,7 +38,7 @@ services:
       [ kafka, redis, consul-server, pushgateway ]
     networks:
       - social-rating-network
-    scale: 2
+    scale: 1
     restart: always
     ports:
       - "8080"

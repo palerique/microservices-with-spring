@@ -1,12 +1,5 @@
 plugins {
     `kotlin-dsl`
-//    java
-//    id("org.springframework.boot") version "2.6.2"
-//    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-//    kotlin("jvm") version "1.6.10"
-//    kotlin("plugin.spring") version "1.6.10"
-//    id("com.github.spotbugs") version ("4.7.0")
-//    id("org.owasp.dependencycheck") version ("6.3.1")
 }
 
 repositories {

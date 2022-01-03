@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import br.com.palerique.socialratingcollector.collector.domain.PersonCollectorService;
 import br.com.palerique.socialratingcollector.collector.domain.PersonDto;
-import br.com.palerique.socialratingcollector.collector.domain.ResponseData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,15 +26,15 @@ class CollectorControllerTest {
 
   @Test
   void collect() throws JsonProcessingException {
-    PersonDto person = PersonDto.builder()
+    final var person = PersonDto.builder()
         .firstName("Paulo")
         .lastName("Rodrigues")
         .age(37)
         .build();
 
-    PersonDto personDtoWithSeed = person.toBuilder().seed(1).build();
+    final var personDtoWithSeed = person.toBuilder().seed(1).build();
     when(service.schedule(person)).thenReturn(personDtoWithSeed);
-    ResponseData<Object> responseData = controller.collect(person);
+    final var responseData = controller.collect(person);
 
     assertThat(responseData.getData(), is(equalTo(personDtoWithSeed)));
     assertThat(responseData.getMessage(),

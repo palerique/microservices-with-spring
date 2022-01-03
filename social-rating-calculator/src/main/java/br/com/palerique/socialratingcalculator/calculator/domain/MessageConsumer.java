@@ -2,10 +2,10 @@ package br.com.palerique.socialratingcalculator.calculator.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
  */
 @Log4j2
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class MessageConsumer {
 
   private static final String TOPIC = "people";
@@ -32,8 +33,8 @@ public class MessageConsumer {
   @KafkaListener(topics = TOPIC, groupId = "br.com.palerique")
   public void consume(String message) throws JsonProcessingException {
     log.debug("Consumed message -> {}", message);
-    PersonDto person = objectMapper.readValue(message, PersonDto.class);
-    Integer socialRatingScore = socialRatingScoreService.getSocialRatingScore(person);
+    final var person = objectMapper.readValue(message, PersonDto.class);
+    final Integer socialRatingScore = socialRatingScoreService.getSocialRatingScore(person);
 
     log.info(String.format("%s %s has %d score",
         person.getFirstName(),

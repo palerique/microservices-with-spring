@@ -38,13 +38,13 @@ class PersonCollectorServiceTest {
   @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
   void schedule() throws JsonProcessingException {
 
-    PersonDto dto = PersonDto.builder().build();
-    PersonDto dtoWithSeed = dto.toBuilder().seed(BASE_SEED).build();
+    final var dto = PersonDto.builder().build();
+    final var dtoWithSeed = dto.toBuilder().seed(BASE_SEED).build();
 
     when(objectMapper.writeValueAsString(dtoWithSeed)).thenReturn(JSON);
     when(appProperties.getBaseSeed()).thenReturn(BASE_SEED);
 
-    PersonDto result = service.schedule(dto);
+    final var result = service.schedule(dto);
 
     assertThat(result.getSeed(), is(equalTo(BASE_SEED)));
     verify(appProperties).getBaseSeed();

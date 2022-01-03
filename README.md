@@ -6,7 +6,7 @@ A POC to test and learn nice things.
 
 - Add gradle build project as well as conventions to libraries and services
 - Some way to tackle exceptions between services
-- Some short circuits to the case that some service becomes unavailable 
+- Some short circuits to the case that some service becomes unavailable
 - Add spring test container
 
 ## Nice features already added:

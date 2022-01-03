@@ -6,7 +6,6 @@ import br.com.palerique.socialratingcollector.collector.domain.ResponseData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Log4j2
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CollectorController {
 
   private final PersonCollectorService service;
@@ -35,7 +34,7 @@ public class CollectorController {
   public ResponseData<Object> collect(@RequestBody PersonDto person)
       throws JsonProcessingException {
 
-    PersonDto response = service.schedule(person);
+    final var response = service.schedule(person);
 
     return ResponseData.builder()
         .data(response)
