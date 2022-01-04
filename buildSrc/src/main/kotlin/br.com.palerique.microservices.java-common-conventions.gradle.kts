@@ -6,13 +6,14 @@ plugins {
     java
     pmd
     id("com.github.spotbugs")
+    checkstyle
+    id("name.remal.sonarlint")
 //    jacoco
-//    checkstyle
 //    id("org.owasp.dependencycheck")
 }
 
-//group = "br.com.palerique"
-//version = "0.0.1-SNAPSHOT"
+group = "br.com.palerique"
+version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
 
@@ -21,7 +22,6 @@ configurations {
         extendsFrom(configurations.annotationProcessor.get())
     }
 }
-
 
 repositories {
     mavenCentral()
@@ -43,6 +43,10 @@ dependencies {
 //    }
 //}
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 //tasks.withType<KotlinCompile> {
 //    kotlinOptions {
 //        freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -50,8 +54,11 @@ dependencies {
 //    }
 //}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+pmd {
+    isConsoleOutput = true
+    toolVersion = "6.41.0"
+    rulesMinimumPriority.set(5)
+    ruleSets = listOf("${project.rootDir}/config/pmd/ruleset.xml")
 }
 
 tasks.withType<SpotBugsTask>().configureEach {
@@ -64,20 +71,20 @@ tasks.withType<SpotBugsTask>().configureEach {
     reports.maybeCreate("html").isEnabled = true
 }
 
-//configure<CheckstyleExtension> {
-//    isIgnoreFailures = false
-//    maxErrors = 0
-//    maxWarnings = 0
-//    configDirectory.set(file("${project.rootDir}/config/checkstyle"))
-//}
+configure<CheckstyleExtension> {
+    toolVersion = "8.42"
+    isIgnoreFailures = false
+    maxErrors = 0
+    maxWarnings = 0
+    configDirectory.set(file("${project.rootDir}/config/checkstyle/"))
+}
 
 //checkstyle {
-//    toolVersion = "8.42"
-////    ignoreFailures.set(false)
-////    ignoreFailures = false
-////    maxErrors.set(0)
-////    maxWarnings.set(0)
-////    configDirectory.set(file("${project.rootDir}/../config/checkstyle"))
+//    ignoreFailures.set(false)
+//    ignoreFailures = false
+//    maxErrors.set(0)
+//    maxWarnings.set(0)
+//    configDirectory.set(file("${project.rootDir}/config/checkstyle"))
 //}
 
 //tasks.check{
@@ -93,13 +100,6 @@ tasks.withType<SpotBugsTask>().configureEach {
 //    failBuildOnCVSS.set(0)
 //    suppressionFile.set("${project.rootDir}/../config/owasp/suppressions.xml")
 //}
-
-pmd {
-    isConsoleOutput = true
-    toolVersion = "6.34.0"
-    rulesMinimumPriority.set(5)
-    ruleSets = listOf("${project.rootDir}/config/pmd/ruleset.xml")
-}
 
 //jacocoTestCoverageVerification {
 //    violationRules {

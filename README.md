@@ -8,6 +8,7 @@ A POC to test and learn nice things.
 - Some way to tackle exceptions between services
 - Some short circuits to the case that some service becomes unavailable
 - Add spring test container
+- Add Test source folder to Sonarlint build task
 
 ## Nice features already added:
 
@@ -34,6 +35,9 @@ A POC to test and learn nice things.
 - Application monitoring with Micrometrics, Prometheus, Grafana
 - Postman collection containing request to schedule people
 - Added bash scripts to make tasks easier to be executed
+- Added Sonarlint during the build
+- Prepared PMD ruleset to v7
+- Gradle is building projects in parallel
 
 ## System Diagram:
 

@@ -17,4 +17,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-allopen")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.30")
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.1")
+    implementation("name.remal.sonarlint:name.remal.sonarlint.gradle.plugin:1.5.0")
 }
