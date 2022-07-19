@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.6.2")
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.1")
     implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
     implementation("com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.3")
     implementation("org.owasp:dependency-check-gradle:6.5.1")

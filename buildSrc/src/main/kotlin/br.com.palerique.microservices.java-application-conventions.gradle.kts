@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management")
 }
 
-extra["springCloudVersion"] = "2021.0.0"
+extra["springCloudVersion"] = "2021.0.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")

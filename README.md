@@ -4,18 +4,18 @@ A POC to test and learn nice things.
 
 ## Nice features TODO:
 
-- Add gradle build project as well as conventions to libraries and services
-- Some way to tackle exceptions between services
+- Test reactive service
+- Add Spring Cloud Config Server and Client
 - Some short circuits to the case that some service becomes unavailable
 - Add spring test container
 - Add Test source folder to Sonarlint build task
 - Add some plugin able to format code according to Google style, maybe https://github.com/autostyle/autostyle/tree/master/plugin-gradle
-- Test Camunda Saga
-- Test reactive service
-- Add Spring Cloud Config Server and Client
+- Some way to tackle exceptions between services - Test Camunda Saga
+- Add hexagonal architecture
 
 ## Nice features already added:
 
+- Add gradle build project as well as conventions to libraries and services
 - Consume http requests with JSON in a body;
 - Read properties from application properties files
 - Send messages to Kafka
