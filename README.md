@@ -9,6 +9,10 @@ A POC to test and learn nice things.
 - Some short circuits to the case that some service becomes unavailable
 - Add spring test container
 - Add Test source folder to Sonarlint build task
+- Add some plugin able to format code according to Google style, maybe https://github.com/autostyle/autostyle/tree/master/plugin-gradle
+- Test Camunda Saga
+- Test reactive service
+- Add Spring Cloud Config Server and Client
 
 ## Nice features already added:
 
