@@ -56,3 +56,11 @@ A POC to test and learn nice things.
 | Prometheus Pushgateway        | [localhost:9091](http://localhost:9091)                                     | Metrics / Monitoring         |
 | Redis                         | [localhost:6379](http://localhost:6379)                                     | Data structure store         |
 | Kafka                         | [localhost:9092](http://localhost:9092)                                     | Messaging                    |
+
+## References:
+
+https://www.nexsoftsys.com/articles/how-to-anatomy-of-spring-cloud-config-work.html
+https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server
+
+
+
