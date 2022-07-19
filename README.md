@@ -9,9 +9,11 @@ A POC to test and learn nice things.
 - Some short circuits to the case that some service becomes unavailable
 - Add spring test container
 - Add Test source folder to Sonarlint build task
-- Add some plugin able to format code according to Google style, maybe https://github.com/autostyle/autostyle/tree/master/plugin-gradle
+- Add some plugin able to format code according to Google style,
+  maybe https://github.com/autostyle/autostyle/tree/master/plugin-gradle
 - Some way to tackle exceptions between services - Test Camunda Saga
 - Add hexagonal architecture
+- K8
 
 ## Nice features already added:
 
@@ -49,17 +51,18 @@ A POC to test and learn nice things.
 
 ## Services Address and Ports
 
-| Service                       | Address + Port                                                              | Observations                 |
-|-------------------------------|-----------------------------------------------------------------------------|------------------------------|
-| Consul UI                     | [localhost:8500](http://localhost:8500)                                     | Service Registry UI          |
-| social-rating-data-collector  | [localhost:80/collector](http://localhost:80/collector/actuator)            | Service I                    |
-| social-rating-data-calculator | [localhost:80/calculator](http://localhost:80/calculator/actuator)          | Service II                   |
-| App Gateway                   | [localhost:80](http://localhost:80)                                         | Application gateway to APIs  |
-| Prometheus                    | [localhost:9090](http://localhost:9090)                                     | Metrics / Monitoring         |
-| Grafana                       | [localhost:3000](http://localhost:3000) - user: admin pwd: grafana          | Metrics / Monitoring         |
-| Prometheus Pushgateway        | [localhost:9091](http://localhost:9091)                                     | Metrics / Monitoring         |
-| Redis                         | [localhost:6379](http://localhost:6379)                                     | Data structure store         |
-| Kafka                         | [localhost:9092](http://localhost:9092)                                     | Messaging                    |
+| Service                        | Address + Port                                                     | Observations                |
+|--------------------------------|--------------------------------------------------------------------|-----------------------------|
+| Consul UI                      | [localhost:8500](http://localhost:8500)                            | Service Registry UI         |
+| social-rating-data-collector   | [localhost:80/collector](http://localhost:80/collector/actuator)   | Service I                   |
+| social-rating-data-calculator  | [localhost:80/calculator](http://localhost:80/calculator/actuator) | Service II                  |
+| App Gateway                    | [localhost:80](http://localhost:80)                                | Application gateway to APIs |
+| App Config Server              | [localhost:8888](http://localhost:8888)                            | Application Config Server   |
+| Prometheus                     | [localhost:9090](http://localhost:9090)                            | Metrics / Monitoring        |
+| Grafana                        | [localhost:3000](http://localhost:3000) - user: admin pwd: grafana | Metrics / Monitoring        |
+| Prometheus Pushgateway         | [localhost:9091](http://localhost:9091)                            | Metrics / Monitoring        |
+| Redis                          | [localhost:6379](http://localhost:6379)                            | Data structure store        |
+| Kafka                          | [localhost:9092](http://localhost:9092)                            | Messaging                   |
 
 ## References:
 

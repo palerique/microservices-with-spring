@@ -1,25 +1,26 @@
 spring:
   application:
-    name: social-rating-calculator
+    name: social-rating-application-config-server
   cloud:
     consul:
+      enabled: true
       host: localhost
       port: 8500
       discovery:
         service-name: ${spring.application.name}
         instance-id: "${spring.application.name}-${spring.cloud.client.hostname}-${random.int[1,999999]}"
+        # Get only services that are passing the health check
+        query-passing: true
         register: true
         deregister: true
         health-check-interval: 10s
         health-check-timeout: 10s
         health-check-critical-timeout: 10s
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: br.com.palerique
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    config:
+      server:
+        git:
+          uri: https://github:com/cloud-native-java-with-k8s-livelessons/configuration-config.git
+        default-label: main
   redis:
     database: 0
     host: localhost

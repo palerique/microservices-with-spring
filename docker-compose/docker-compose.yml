@@ -12,7 +12,7 @@ services:
       SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS: kafka:9092
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
     depends_on:
-      [ consul-server, kafka, pushgateway ]
+      [ consul-server, kafka, pushgateway, social-rating-application-config-server ]
     networks:
       - social-rating-network
     scale: 1
@@ -35,7 +35,7 @@ services:
       SPRING_REDIS_TIMEOUT: 60000
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
     depends_on:
-      [ kafka, redis, consul-server, pushgateway ]
+      [ kafka, redis, consul-server, pushgateway, social-rating-application-config-server ]
     networks:
       - social-rating-network
     scale: 1
@@ -52,12 +52,32 @@ services:
       SPRING_CLOUD_CONSUL_PORT: 8500
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
     depends_on:
-      [ consul-server, social-rating-calculator, social-rating-data-collector, pushgateway ]
+      [ consul-server, social-rating-calculator, social-rating-data-collector, pushgateway, social-rating-application-config-server ]
     networks:
       - social-rating-network
     restart: always
     ports:
       - "80:80"
+
+  social-rating-application-config-server:
+    extends:
+      file: ../application-config-server/src/main/docker/app.yml
+      service: social-rating-application-config-server
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul-server
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_REDIS_PASSWORD: Redis2019!
+      SPRING_REDIS_TIMEOUT: 60000
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_PUSHGATEWAY_BASE_URL: pushgateway:9091
+    depends_on:
+      [ consul-server, pushgateway ]
+    networks:
+      - social-rating-network
+    restart: always
+    ports:
+      - "8888:8888"
 
   consul-server:
     image: hashicorp/consul:1.9.3
