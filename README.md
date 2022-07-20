@@ -18,6 +18,7 @@ A POC to test and learn nice things.
 - Add a default grafana dashboard that is deployed whenever a instance is created 
     - https://ops.tips/blog/initialize-grafana-with-preconfigured-dashboards/
     - https://grafana.com/grafana/dashboards/4701
+    - https://github.com/robsonbittencourt/monitoring-micrometer/tree/master/grafana
 
 ## Nice features already added:
 
