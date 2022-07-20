@@ -34,7 +34,7 @@ A POC to test and learn nice things.
 - All data are being persisted in Redis
 - We can set system properties on .properties files, yaml or environment variables
 - Tech stack includes: Java, Spring Boot, Apache Kafka, Redis
-- [CI implemented using Github Actios](https://github.com/palerique/microservices-with-spring/actions)
+- [CI implemented using Github Actions](https://github.com/palerique/microservices-with-spring/actions)
 - Quality enforcement during build (Code style with Checkstyle (Google Java Style), code quality
   with PMD and SpotBugs, code coverage % with Jacoco, security and vulnerabilities with OWASP)
 - Application gateway
