@@ -14,6 +14,10 @@ A POC to test and learn nice things.
 - Some way to tackle exceptions between services - Test Camunda Saga
 - Add hexagonal architecture
 - K8
+- Central log and tracing between services - https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
+- Add a default grafana dashboard that is deployed whenever a instance is created 
+-- https://ops.tips/blog/initialize-grafana-with-preconfigured-dashboards/
+-- https://grafana.com/grafana/dashboards/4701
 
 ## Nice features already added:
 
