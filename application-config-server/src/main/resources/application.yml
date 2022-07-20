@@ -23,6 +23,13 @@ spring:
           uri: https://github.com/cloud-native-java-with-k8s-livelessons/configuration-config.git
           skipSslValidation: true
         default-label: main
+  zipkin:
+    baseUrl: http://localhost:9411
+    service.name: ${spring.application.name}
+    sender.type: web
+    enabled: true
+    kafka:
+      topic: people
   redis:
     database: 0
     host: localhost

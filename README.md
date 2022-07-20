@@ -16,6 +16,8 @@ A POC to test and learn nice things.
 - K8
 - Central log and tracing between services - https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
 - Ensure the code coverage using jacoco
+- update the main diagram
+- add a dependency diagram (between docker compose services)
 
 ## Nice features already added:
 

@@ -13,6 +13,13 @@ spring:
         health-check-interval: 10s
         health-check-timeout: 10s
         health-check-critical-timeout: 10s
+  zipkin:
+    baseUrl: http://localhost:9411
+    service.name: ${spring.application.name}
+    sender.type: web
+    enabled: true
+    kafka:
+      topic: people
   kafka:
     consumer:
       bootstrap-servers: localhost:9092

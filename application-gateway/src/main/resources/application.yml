@@ -1,6 +1,4 @@
-server:
-  port: 80
-
+server.port: 80
 spring:
   application:
     name: social-rating-application-gateway
@@ -55,6 +53,13 @@ spring:
             - Path=/calculator/**
           filters:
             - StripPrefix=1
+  zipkin:
+    baseUrl: http://localhost:9411
+    service.name: ${spring.application.name}
+    sender.type: web
+    enabled: true
+    kafka:
+      topic: people
 logging:
   level:
     br:
