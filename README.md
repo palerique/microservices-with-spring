@@ -19,6 +19,7 @@ A POC to test and learn nice things.
     - https://ops.tips/blog/initialize-grafana-with-preconfigured-dashboards/
     - https://grafana.com/grafana/dashboards/4701
     - https://github.com/robsonbittencourt/monitoring-micrometer/tree/master/grafana
+- Ensure the code coverage using jacoco
 
 ## Nice features already added:
 
