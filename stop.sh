@@ -3,5 +3,5 @@ set -x
 set -e
 
 pushd docker-compose || exit
-docker compose down
+docker-compose down
 popd || exit

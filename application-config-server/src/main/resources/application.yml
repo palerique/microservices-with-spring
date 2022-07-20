@@ -43,7 +43,8 @@ management:
     enable:
       all: true
     tags:
-      application: "${spring.cloud.consul.discovery.instance-id}"
+      application: "${spring.application.name}"
+      instance: "${spring.cloud.consul.discovery.instance-id}"
     export:
       prometheus:
         enabled: true
