@@ -1,3 +1,4 @@
+server.port: 8888
 spring:
   application:
     name: social-rating-application-config-server
@@ -19,7 +20,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github:com/cloud-native-java-with-k8s-livelessons/configuration-config.git
+          uri: https://github.com/cloud-native-java-with-k8s-livelessons/configuration-config.git
+          skipSslValidation: true
         default-label: main
   redis:
     database: 0
@@ -47,6 +49,6 @@ management:
         enabled: true
         pushgateway:
           enabled: true
-          base-url: pushgateway:9091
+          base-url: localhost:9091
           shutdown-operation: push
           push-rate: 5s

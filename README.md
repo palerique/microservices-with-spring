@@ -66,8 +66,10 @@ A POC to test and learn nice things.
 
 ## References:
 
-https://www.nexsoftsys.com/articles/how-to-anatomy-of-spring-cloud-config-work.html
-https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server
+- https://www.nexsoftsys.com/articles/how-to-anatomy-of-spring-cloud-config-work.html
+- https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server
+- https://github.com/spring-tips/spring-cloud-config-monitor
+- https://www.youtube.com/watch?v=aC_siBP8rx8
 
 
 

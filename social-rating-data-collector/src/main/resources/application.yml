@@ -40,6 +40,6 @@ management:
         enabled: true
         pushgateway:
           enabled: true
-          base-url: pushgateway:9091
+          base-url: localhost:9091
           shutdown-operation: push
           push-rate: 5s
