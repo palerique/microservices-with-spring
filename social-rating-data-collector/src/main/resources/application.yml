@@ -30,9 +30,9 @@ spring:
     import: classpath:additional-application-properties.yml
 logging:
   level:
-    br:
-      com:
-        palerique: DEBUG
+    br.com.palerique: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
 management:
   endpoints:
     web:

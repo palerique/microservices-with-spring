@@ -62,9 +62,9 @@ spring:
       topic: people
 logging:
   level:
-    br:
-      com:
-        palerique: DEBUG
+    br.com.palerique: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
 management:
   endpoints:
     web:
